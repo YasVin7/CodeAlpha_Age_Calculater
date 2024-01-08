@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <he>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculater</title>
+    <link rel="stylesheet" href="style.css" >
+  </head>
+  <body>
+    <div class="container">
+        <div class="calculater">
+            <h1>Explore Your Age <br><span>Here!</span></h1>
+            <div class="input-box">
+                <input type="date" id="date">
+                <button onclick="calculateAge()">Calculate</button>
+            </div>
+            <h1 class="first">You Are : </h1>
+            <div class="result-box">
+              <div class="result-item" id="years">Years: </div>
+              <div class="result-item" id="months">Months: </div>
+              <div class="result-item" id="days">Days: </div>
+            </div>
+            <h1 class="second">Old !</h1>
+        </div>
+    </div>
+
+
+    <script>
+
+      let userInput = document.getElementById("date");
+      
+      //condition to select only present date or a past date
+       userInput.max  = new Date().toISOString().split("T")[0];
+
+       //display
+       let resultYears = document.getElementById("years");
+      let resultMonths = document.getElementById("months");
+      let resultDays = document.getElementById("days");
+
+function calculateAge(){
+
+    //when we select any date in the input box,
+    //that will be stored in this variable birthDate
+    let birthDate = new Date(userInput.value);
+
+    //store the date
+    let d1 = birthDate.getDate();
+    //store the month
+    let m1 = birthDate.getMonth() + 1;//because it wil start from the zero. 1 for january / 12 for december
+    //store the year
+    let y1 = birthDate.getFullYear();
+
+    //today's date to calculate the differnce
+    let today = new Date();
+
+    //store the date
+    let d2 = today.getDate();
+    //store the month
+    let m2 = today.getMonth() + 1;//because it wil start from the zero. 1 for january / 12 for december
+    //store the year
+    let y2 = today.getFullYear();
+
+    //to store the difference of day, month and year
+    let d3, m3, y3;
+
+    //year gap = current year - birth year
+    y3 = y2 - y1;
+
+    if( m2 >= m1){
+      m3 = m2 - m1;
+
+    }else{
+      y3--;
+      m3 = 12 + m2 - m1;
+    }
+
+
+    if( d2 >= d1){
+      d3 = d2 - d1;
+    }else{
+      m3--;
+      d3 = getDaysInMonth(y1, m1) + d2 - d1;
+    }
+    if (m3 < 0){
+      m3 = 11;
+      y3--;
+    }
+
+         resultYears.textContent = `${y3}  Years `;
+        resultMonths.textContent = `${m3}  Months `;
+        resultDays.textContent = `${d3}  Days `;
+
+}
+
+function getDaysInMonth(year, month){
+  return new Date(year, month, 0). getDate();
+}
+
+    </script>
+  </body>
+</html>
